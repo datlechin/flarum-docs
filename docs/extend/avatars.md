@@ -1,6 +1,6 @@
 # Avatar Drivers
 
-Flarum allows new avatar drivers to be added through extenders. By default, Flarum includes two drivers: the Default driver (which uses uploaded avatars) and the Gravatar driver (which generates avatars from user email addresses).
+Flarum allows new avatar drivers to be added through extenders. By default, Flarum includes one driver: the Default driver (which returns null when no uploaded avatar is present). A Gravatar driver will be available as part of the core extension suite.
 
 To create your own avatar driver, you will need to create a class implementing `Flarum\User\Avatar\DriverInterface`. This allows extensions to integrate custom avatar providers from external services like Discord, GitHub, Steam, or any custom service.
 
@@ -67,8 +67,10 @@ The first parameter is a unique identifier for your driver. This identifier is s
 
 Once registered, avatar drivers will automatically appear in the admin dashboard under **Basics → Avatar Driver**. The dropdown will only appear when two or more drivers are registered. Administrators can select which driver should be active for users who have not uploaded custom avatars.
 
-Flarum automatically adds your driver to the admin settings page when you register it. No additional frontend code is required.
+Flarum automatically adds your driver to the admin settings page when you register it.
+
+> **Note:** The admin dropdown will display the raw driver identifier by default. To show a human-readable label, override `BasicsPage.driverLocale` in your extension's frontend code.
 
 The selected driver identifier is stored in the `avatar_driver` setting. If the setting is empty or refers to an unregistered driver, Flarum will use the Default driver as a fallback.
 
-For a real-world example, see Flarum's built-in [Gravatar driver](https://github.com/flarum/framework/blob/main/framework/core/src/User/Avatar/GravatarDriver.php).
+For a minimal example, see Flarum's built-in [DefaultDriver](https://github.com/flarum/framework/blob/main/framework/core/src/User/Avatar/DefaultDriver.php).
